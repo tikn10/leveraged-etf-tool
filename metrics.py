@@ -38,10 +38,6 @@ def calc_metrics_simple(equity: pd.Series, rf_annual: float = 0.0, trading_days:
 
 
 def xirr_from_cashflows(cashflows: pd.Series) -> float:
-    """
-    XIRR via Newton method.
-    cashflows: datetime index, negative = deposits, positive = withdrawals (final value)
-    """
     cf = cashflows.dropna()
     if cf.empty:
         return np.nan
@@ -71,11 +67,6 @@ def xirr_from_cashflows(cashflows: pd.Series) -> float:
 
 
 def make_cashflows_from_contrib_and_final(contrib_cum: pd.Series, final_value: float) -> pd.Series:
-    """
-    Build cashflow series from cumulative contributions:
-      - deposits are negative (outflows)
-      - final value is positive inflow at the end
-    """
     c = contrib_cum.astype(float).dropna()
     if c.empty:
         return pd.Series(dtype="float64")
