@@ -267,3 +267,18 @@ def make_cashflows_from_contrib_and_final(contrib_cum: pd.Series, final_value: f
     cf = -deposits
     cf.iloc[-1] = cf.iloc[-1] + float(final_value)
     return cf
+
+def var_es(x: np.ndarray, alpha: float = 0.05) -> tuple[float, float]:
+    """
+    Value at Risk & Expected Shortfall auf Verteilung x (z.B. Total Return).
+    alpha=0.05 => 5%-Quantil (linke Seite).
+    """
+    arr = np.asarray(x, dtype=float)
+    arr = arr[~np.isnan(arr)]
+    if arr.size == 0:
+        return (np.nan, np.nan)
+
+    var = float(np.quantile(arr, alpha))
+    tail = arr[arr <= var]
+    es = float(np.mean(tail)) if tail.size else np.nan
+    return var, es
