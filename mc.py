@@ -204,43 +204,9 @@ def render_mc_tab(
         with col_left:
             st.markdown("**Historische Daten**")
             st.write(f"Zeitraum: {a['historische_daten']['Zeitraum']}")
-            st.write(f"Tage: {a['historische_daten']['Tage']}")
+            st.write(f"Anzahl Handelstage: {a['historische_daten']['Tage']}")
 
-        # Rechte Spalte: Tabelle
-        with col_right:
-            st.markdown("**Historische Rendite- & Risikoparameter**")
-
-            df_params = pd.DataFrame(
-                {
-                    "Rendite p.a. (historisch)": [
-                        a["basis_etf"]["Rendite p.a. (implizit)"],
-                        a["synth_etf"]["Rendite p.a. (implizit)"],
-                    ],
-                    "Volatilität p.a. (historisch)": [
-                        a["basis_etf"]["Volatilität p.a."],
-                        a["synth_etf"]["Volatilität p.a."],
-                    ],
-                },
-                index=["Basis-ETF", f"Synth {leverage:.1f}x"],
-            )
-
-            st.dataframe(
-                df_params.style.format(
-                    {
-                        "Rendite p.a. (historisch)": "{:.1%}",
-                        "Volatilität p.a. (historisch)": "{:.1%}",
-                    }
-                ),
-                width="stretch",
-            )
-
-            st.caption(
-                "Die dargestellten Parameter basieren auf historischen Tagesrenditen und "
-                "dienen ausschließlich der Einordnung der Ergebnisse. "
-                "Die Simulation basiert auf einem Bootstrap-Verfahren ohne parametrische Annahmen."
-            )
-
-
+       
 
         # --------------------------
         # Ergebnis – Kacheln
